@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<head>
+  <title>사용자 권한 관리</title>
+  <style>
+    /* 스타일을 추가해주세요. */
+  </style>
+</head>
+<body>
+  <!-- 사용자명으로 검색을 할 수 있는 검색창 -->
+  <form>
+  <label for="search-input">사용자명 검색:</label>
+  <input type="text" id="searchUser" name="searchKeyword"  />
+  <input type="submit" value="검색" formaction="/user/manager" id="goSearch" />
+</form>
+  <hr />
+
+  <div style="display: flex;">
+    <!-- 왼쪽 섹션: 권한 신청자 목록 -->
+    <div style="flex: 1; text-align:center;">
+      <h2>권한 신청자 목록</h2>
+     <table  style="border:1px solid black;margin-left:auto;margin-right:auto;">
+     	<thead>
+     	<tr>
+     	<th>ID</th>
+     	<th>사원명</th>
+     	<th>부서명</th>
+     	<th>승인상태</th>
+     	</tr>
+     	</thead>
+     	<tbody>
+     	<th:block th:each="user : ${userList}">
+     	<tr>
+     	<td th:text="${user.user_id}" id=user_info_id th:value="${user.user_id}" th:onclick="getUserInfo([[${user.user_id}]])"></td>
+     	<td th:text="${user.user_nm}"></td>
+     	<td th:text="${user.dept_nm}"></td>
+     	<td th:text="${user.user_aprv_yn}"></td>
+     	</tr>
+     	</th:block>
+     	</tbody>
+     </table>
+     
+    </div>
+    
+    <!-- 오른쪽 섹션: 사용자 상세 정보와 수정 가능한 입력창 -->
+    <div style="flex: 1;">
+      <h2>사용자 상세 정보</h2>
+      <form id="user-form" method="post">
+ <table>
+  <tr>
+    <td>사용자 ID</td>
+    <td><input type="text" id="user_id" name="user_id" readonly></td>
+  </tr>
+  <tr>
+    <td>사용자명</td>
+    <td><input type="text" id="user_nm" name="user_nm"></td>
+  </tr>
+  <tr>
+    <td>이메일</td>
+    <td><input type="text" id="user_eml" name="user_eml"></td>
+  </tr>
+  <tr>
+    <td>부서</td>
+    <td><select class="form-control" id="user_dept_no" name="user_dept_no">
+                <option value="">선택안함</option>
+                <option th:each="dept:${deptList}" th:text="${dept.dept_nm}" th:value="${dept.dept_no}"></option>
+            </select></td>
+  </tr>
+  <tr>
+    <td>전화번호</td>
+    <td><input type="text" id="user_telno" name="user_telno"></td>
+  </tr>
+  <tr>
+    <td>주소</td>
+    <td><input type="text" id="user_addr" name="user_addr"></td>
+  </tr>
+  <tr>
+    <td>취미</td>
+    <td><th:block th:each="hobby, hobbyStat : ${hobbyList}">
+	 	
+	        <input type="checkbox" class="hobby_cd" th:attr="id=${'hobby_cd' + hobbyStat.index}" name="hobby_cd" 
+	        th:value="${hobby.hobby_cd}">
+	        <label for="checkbox1" th:text="${hobby.hobby_nm}" ></label>
+	        </th:block></td>
+  </tr>
+  <tr>
+    <td>승인상태</td>
+    <td>
+    <select class="form-control" id="user_aprv_yn" name="user_aprv_yn">
+                <option value="N">승인대기</option>
+                <option value="Y">승인</option>
+               
+            </select>
+    </td>
+  </tr>
+</table>
+        <input type="submit" value="저장" formaction="/user/update"/>
+        <input type="submit" value="삭제" formaction="/user/delete"/>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
+ <script>
+ function getUserInfo(user_id){
+ $.ajax({
+	type:"GET",
+	url:"/user/info",
+	data:{user_id:user_id},
+ 	dataType:"json"
+ })
+ .done((res)=>{
+	 $('#user_id').attr("value",res.user_id);
+	 $('#user_nm').attr("value",res.user_nm);
+	 $('#user_eml').attr("value",res.user_eml);
+	 $('#user_dept_no').val(res.user_dept_no);
+	 $('#user_telno').attr("value",res.user_telno);
+	 $('#user_addr').attr("value",res.user_addr);
+	 $('#user_aprv_yn').val(res.user_aprv_yn);
+
+	 
+	 
+	 $('.hobby_cd').each(function() {
+		    var currentValue = $(this).val();
+		    for (var i = 0; i < Object.keys(res).length; i++) {
+		        var resValue = res['user_hobby_info' + i];
+		        if (currentValue == resValue) {
+		            $(this).prop('checked', true);
+		            break;
+		        } else {
+		            $(this).prop('checked', false);
+		        }
+		    }
+		});
+ })
+ }
+ </script>

@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "spring.datasource.thymeleaf.cache",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.thymeleaf.cache'"
+  },
+  {
+    "name": "spring.datasource.thymeleaf.check-template",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.thymeleaf.check-template'"
+  },
+  {
+    "name": "spring.datasource.thymeleaf.prefix",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.thymeleaf.prefix'"
+  },
+  {
+    "name": "spring.datasource.thymeleaf.suffix",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.thymeleaf.suffix'"
+  }
+]}

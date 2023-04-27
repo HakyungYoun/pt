@@ -1,0 +1,31 @@
+spring:
+ datasource: 
+  driver-class-name: org.postgresql.Driver 
+  url: jdbc:postgresql://localhost:5432/hk # GCP 외부 IP 
+  username: user01 # DB 계정 
+  password: 5379 # DB 비밀번호
+ 
+  thymeleaf:
+    cache: false
+    check-template: true
+    prefix: classpath:/templates/ ,classpath:/templates/user/
+    suffix: .html
+    
+
+server:
+  port: 8080
+  
+  servlet:
+    encoding:
+      force: true
+      
+      
+
+#server.port=8080
+#server.servlet.encoding.force=true
+#spring.thymeleaf.cache=false
+#spring.thymeleaf.check-template-location=true
+#spring.thymeleaf.prefix=classpath:/templates/
+#spring.thymeleaf.suffix=.html
+#spring.mvc.view.prefix=/WEB-INF/views/
+#spring.mvc.view.suffix=.jsp

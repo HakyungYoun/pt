@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>권한 승인 요청</title>
+    <!-- 부트스트랩 CSS 링크 -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+   	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+        <input type="hidden" name="idcheck" id="idcheck" value="N">
+    <div class="container mt-5">
+        <h1 class="mb-4">권한 승인 요청</h1>
+        <form id="myform" name="myform">
+           <div class="form-group">
+		    <label for="user_id">사용자 ID</label>
+		    <div class="input-group">
+		        <input type="text" class="form-control" id="user_id" name="user_id" required>
+		        <div class="input-group-append">
+		            <button type="button" class="btn btn-primary" onclick="goIdCheck()">ID 중복체크</button>
+		        </div>
+		    </div>
+		</div>
+            <div class="form-group">
+                <label for="user_nm">이름</label>
+                <input type="text" class="form-control" id="user_nm" name="user_nm" required>
+            </div>
+            <div class="form-group">
+                <label for="user_eml">이메일</label>
+                <input type="email" class="form-control" id="user_eml" name="user_eml" required>
+            </div>
+       		<div class="form-group">
+            <label for="user_dept_no">부서명:</label>
+            <select class="form-control" id="user_dept_no" name="user_dept_no">
+                <option th:each="dept:${deptList}" th:text="${dept.dept_nm}" th:value="${dept.dept_no}"></option>
+            </select>
+        </div>
+            <div class="form-group">
+                <label for="user_telno">전화번호</label>
+                <input type="tel" class="form-control" id="user_telno" name="user_telno" required>
+            </div>
+           
+            <div class="form-group">
+                <label for="user_addr">주소</label>
+                <input type="text" class="form-control" id="user_addr" name="user_addr" required>
+            </div>
+               <label for="user_addr">취미</label>
+             <div class="checkbox-container">
+	        <th:block th:each="hobby : ${hobbyList}">
+	        <input type="checkbox" id="hobby_cd" name="hobby_cd" th:value="${hobby.hobby_cd}">
+	        <label for="checkbox1" th:text="${hobby.hobby_nm}"></label>
+	        </th:block>
+	      
+    </div>
+            <button type="button" class="btn btn-primary" id="btnRequest">승인 요청</button>
+        </form>
+    </div>
+</body>
+</html>
+<script>
+$(()=>{
+	$("#btnRequest").click(()=>{
+	let param=$("#myform").serialize();
+	if ($("#idcheck").val()=="N") {
+        alert("아이디 중복체크를 하세요");
+        $("#user_id").focus();
+        return;
+     }
+		$.ajax({
+	         url:"/user/request",
+	         data:param,
+	         dataType:"json", 
+	         type:"POST"
+	      })
+	      .done((res)=>{
+	    	  if(res.result=="success"){
+		            alert("등록 요청 되었습니다");
+	    	  }
+		         location.href= "/";
+	      })
+	      
+	})
+})
+function goIdCheck(){
+	 let user_id= $("#user_id").val().trim();
+	   if(user_id==""){
+	      alert("아이디를 입력하세요");
+	      $("#user_id").focus();
+	      return;
+	   }
+	      $.ajax({
+	         url:"./idcheck",
+	         data:{"user_id":user_id},
+	         method:"get",
+	         dataType:"JSON"
+	      })
+	      .done((response)=>{
+	         if(response.result=="success"){
+	            $("#idcheck").val("Y");
+	            alert("사용가능한 아이디 입니다");
+	            $("#user_id").prop("readonly", true);
+	         }else{
+	            alert("사용중인 아이디 입니다");
+	         }
+	      })
+	      .fail((response,status,error)=>{
+	         console.log(error);
+	      });
+}
+</script>
