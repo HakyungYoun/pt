@@ -2,6 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="https://kit.fontawesome.com/c38f6821c8.js" crossorigin="anonymous"></script>
 <head>
   <title>사용자 권한 관리</title>
   <style>
@@ -14,8 +15,9 @@
   <label for="search-input">사용자명 검색:</label>
   <input type="text" id="searchUser" name="searchKeyword"  />
   <input type="submit" value="검색" formaction="/user/manager" id="goSearch" />
+  <a href="/"><i class="fas fa-home fa-2xl" style="float: right;margin:10px"></i></a>
 </form>
-  <hr />
+  <hr/>
 
   <div style="display: flex;">
     <!-- 왼쪽 섹션: 권한 신청자 목록 -->

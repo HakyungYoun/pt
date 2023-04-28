@@ -9,10 +9,12 @@
    	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/c38f6821c8.js" crossorigin="anonymous"></script>
 </head>
 <body>
         <input type="hidden" name="idcheck" id="idcheck" value="N">
     <div class="container mt-5">
+        <a href="/"><i class="fas fa-home fa-2xl" style="float: right;"></i></a>
         <h1 class="mb-4">권한 승인 요청</h1>
         <form id="myform" name="myform">
            <div class="form-group">
@@ -64,11 +66,36 @@
 $(()=>{
 	$("#btnRequest").click(()=>{
 	let param=$("#myform").serialize();
+	let user_nm= $("#user_nm").val().trim();
+	let user_eml= $("#user_eml").val().trim();
+	let user_telno= $("#user_telno").val().trim();
+	let user_addr= $("#user_addr").val().trim();
 	if ($("#idcheck").val()=="N") {
         alert("아이디 중복체크를 하세요");
         $("#user_id").focus();
         return;
      }
+	if(user_nm==""){
+	      alert("사용자명을 입력하세요");
+	      $("#user_nm").focus();
+	      return;
+	   }
+	if(user_eml==""){
+	      alert("이메일을 입력하세요");
+	      $("#user_eml").focus();
+	      return;
+	   }
+	if(user_telno==""){
+	      alert("전화번호를 입력하세요");
+	      $("#user_telno").focus();
+	      return;
+	   }
+	if(user_addr==""){
+	      alert("주소를 입력하세요");
+	      $("#user_addr").focus();
+	      return;
+	   }
+	
 		$.ajax({
 	         url:"/user/request",
 	         data:param,
