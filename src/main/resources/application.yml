@@ -1,9 +1,9 @@
 spring:
  datasource: 
   driver-class-name: org.postgresql.Driver 
-  url: jdbc:postgresql://localhost:5432/hk # GCP 외부 IP 
-  username: user01 # DB 계정 
-  password: 5379 # DB 비밀번호
+  url: jdbc:postgresql://34.64.205.102:5432/postgres # GCP 외부 IP 
+  username: postgres # DB 계정 
+  password: 1234 # DB 비밀번호
  
   thymeleaf:
     cache: false
