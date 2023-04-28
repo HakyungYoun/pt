@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -41,12 +40,7 @@ public class UserController {
 	@PostMapping("/user/request")
 	public Map<String,Object> userRequest(UserDto dto,HobbyDataDto dto4){
 		service4.insertUser(dto);
-		String hobby_cd=dto4.getHobby_cd();
-		String[] values = hobby_cd.split(",");
-		for (String value : values) {
-			dto4.setHobby_cd(value);
-			service4.insertHobby(dto4);
-		}
+		service4.insertHobby(dto4);
 		Map<String,Object> map=new HashMap<String,Object>();
 		map.put("result", "success");
 		return map;

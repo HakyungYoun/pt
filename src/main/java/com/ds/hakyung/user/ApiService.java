@@ -20,17 +20,17 @@ public class ApiService {
     private final String btBaseUrl="http://localhost:8081";
 
 
+    @SuppressWarnings("unchecked")
     public List<DeptDto> getDeptsFromBt() {
         String url = btBaseUrl + "/deptList";
-        ResponseEntity<List<DeptDto>> response = restTemplate.exchange(url, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<DeptDto>>() {});
-        return response.getBody();
+		List <DeptDto> deptList = restTemplate.getForObject(url, List.class);
+        return deptList;
     }
+    @SuppressWarnings("unchecked")
     public List<HobbyDto> getHobbysFromBt() {
         String url = btBaseUrl + "/hobbyList";
-        ResponseEntity<List<HobbyDto>> response = restTemplate.exchange(url, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<HobbyDto>>() {});
-        return response.getBody();
+		List<HobbyDto> hobbyList = restTemplate.getForObject(url, List.class);
+        return hobbyList;
 }
     public void insertUser(UserDto user) {
         String url = btBaseUrl + "/userInsert";
@@ -42,32 +42,31 @@ public class ApiService {
     }
     public boolean userIdCheck(UserDto user) {
     	 String url = btBaseUrl + "/userIdCheck";
-    	 ResponseEntity<Boolean> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, Boolean.class);
-    	    return responseEntity.getBody();
+    	 Boolean userIdCheck = restTemplate.getForObject(url, Boolean.class);
+    	    return userIdCheck;
     }
+    @SuppressWarnings("unchecked")
     public List<UserDto> getUserList() {
     	String url = btBaseUrl + "/userList";
-    	ResponseEntity<List<UserDto>> response = restTemplate.exchange(url, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<UserDto>>() {});
-        return response.getBody();
+		List<UserDto> userList = restTemplate.getForObject(url, List.class);
+        return userList;
     }
+    @SuppressWarnings("unchecked")
     public List<UserDto> searchUserList(String searchKeyword) {
     	String url = btBaseUrl + "/userSearchList?searchKeyword=" +searchKeyword;
-    	ResponseEntity<List<UserDto>> response = restTemplate.exchange(url, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<UserDto>>() {});
-        return response.getBody();
+		List <UserDto> searchList = restTemplate.getForObject(url, List.class);
+        return searchList;
     }
     public UserDto userInfo2(String user_id) {
     	String url = btBaseUrl +  "/userInfo?user_id=" + user_id;
-    	ResponseEntity<UserDto> response = restTemplate.exchange(url, HttpMethod.GET, null,
-                new ParameterizedTypeReference<UserDto>() {});
-    	return response.getBody();
+    	UserDto userInfo = restTemplate.getForObject(url, UserDto.class);
+    	return userInfo;
     }
-    public List<UserDto> getHobbyList(String user_id){
+    @SuppressWarnings("unchecked")
+	public List<UserDto> getHobbyList(String user_id){
     	String url = btBaseUrl + "/userHobbyInfo?user_id="+ user_id;
-    	ResponseEntity<List<UserDto>> response = restTemplate.exchange(url, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<UserDto>>() {});
-        return response.getBody();
+    	List <UserDto> userHobbyList = restTemplate.getForObject(url, List.class);
+        return userHobbyList;
     }
     public void updateUser(UserDto user,String user_id) {
     	String url = btBaseUrl + "/userUpdate?user_id="+ user_id;
