@@ -34,9 +34,12 @@
      	<th:block th:each="user : ${userList}">
      	<tr>
      	<td th:text="${user.user_id}" id=user_info_id th:value="${user.user_id}" th:onclick="getUserInfo([[${user.user_id}]])"></td>
-     	<td th:text="${user.user_nm}"></td>
-     	<td th:text="${user.dept_nm}"></td>
-     	<td th:text="${user.user_aprv_yn}"></td>
+     	<td th:text="${user.user_nm}" th:onclick="getUserInfo([[${user.user_id}]])"></td>
+     	<td th:text="${user.dept_nm}" th:onclick="getUserInfo([[${user.user_id}]])"></td>
+     	<td th:onclick="getUserInfo([[${user.user_id}]])">
+     	<th:block th:if="${user.user_aprv_yn}=='Y'">승인</th:block>
+     	<th:block th:if="${user.user_aprv_yn}=='N'">승인대기</th:block>
+     	</td>
      	</tr>
      	</th:block>
      	</tbody>

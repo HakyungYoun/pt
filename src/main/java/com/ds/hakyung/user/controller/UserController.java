@@ -38,7 +38,7 @@ public class UserController {
 		return "user/userWrite";
 	}
 	@ResponseBody
-	@RequestMapping("/user/request")
+	@PostMapping("/user/request")
 	public Map<String,Object> userRequest(UserDto dto,HobbyDataDto dto4){
 		service4.insertUser(dto);
 		String hobby_cd=dto4.getHobby_cd();
