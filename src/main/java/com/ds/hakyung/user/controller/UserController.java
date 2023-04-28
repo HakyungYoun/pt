@@ -65,6 +65,9 @@ public class UserController {
 //	
 	@GetMapping("user/manager")
 	public String goManagerPage(Model model,String searchKeyword) {
+		if(searchKeyword!=null) {
+    		searchKeyword=searchKeyword.trim();
+    	}
 		List<UserDto> userList=service4.getUserList();
 		List<DeptDto> deptList=service4.getDeptsFromBt();
 		List<HobbyDto> HobbyList=service4.getHobbysFromBt();
