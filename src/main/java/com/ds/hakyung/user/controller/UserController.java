@@ -79,7 +79,7 @@ public class UserController {
 	}
 	@ResponseBody
 	@GetMapping("user/info")
-	public Map<String,String> userInfo(@RequestParam("user_id") String user_id,UserDto dto){
+	public Map<String,String> userInfo(@RequestParam("user_id") String user_id){
 		Map<String,String> map=new HashMap<String,String>();
 		UserDto userInfo=service4.userInfo(user_id);
 		List<UserDto> userHbInfo=service4.getHobbyList(user_id);
