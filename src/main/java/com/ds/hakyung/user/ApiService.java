@@ -57,16 +57,15 @@ public class ApiService {
 		List <UserDto> searchList = restTemplate.getForObject(url, List.class);
         return searchList;
     }
-    public UserDto userInfo2(String user_id) {
+    public UserDto userInfo(String user_id) {
     	String url = btBaseUrl +  "/userInfo?user_id=" + user_id;
-    	UserDto userInfo = restTemplate.getForObject(url, UserDto.class);
-    	return userInfo;
-    }
-    @SuppressWarnings("unchecked")
-	public List<UserDto> getHobbyList(String user_id){
-    	String url = btBaseUrl + "/userHobbyInfo?user_id="+ user_id;
-    	List <UserDto> userHobbyList = restTemplate.getForObject(url, List.class);
-        return userHobbyList;
+         return restTemplate.getForObject(url,UserDto.class);
+     }
+    public List<UserDto> getHobbyList(String user_id) {
+        String url = btBaseUrl + "/userHobbyInfo?user_id=" + user_id;
+        ResponseEntity<List<UserDto>> response = restTemplate.exchange(url, HttpMethod.GET, null,
+        		new ParameterizedTypeReference<List<UserDto>>() {});
+        return response.getBody();
     }
     public void updateUser(UserDto user,String user_id) {
     	String url = btBaseUrl + "/userUpdate?user_id="+ user_id;

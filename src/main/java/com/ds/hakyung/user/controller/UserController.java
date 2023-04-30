@@ -79,16 +79,15 @@ public class UserController {
 	}
 	@ResponseBody
 	@GetMapping("user/info")
-	public Map<String,String> userInfo(@RequestParam("user_id") String user_id){
+	public Map<String,String> userInfo(@RequestParam("user_id") String user_id,UserDto dto){
 		Map<String,String> map=new HashMap<String,String>();
-		UserDto userInfo=service4.userInfo2(user_id);
+		UserDto userInfo=service4.userInfo(user_id);
 		List<UserDto> userHbInfo=service4.getHobbyList(user_id);
 		if(userHbInfo!=null) {
 		for (int i = 0; i < userHbInfo.size(); i++) {
 			UserDto uhi=userHbInfo.get(i);
 			map.put("user_hobby_info"+i, uhi.getHobby_cd());
 		}
-		
 		}
 		map.put("user_id", userInfo.getUser_id());
 		map.put("user_nm", userInfo.getUser_nm());
